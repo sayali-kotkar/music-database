@@ -23,7 +23,7 @@ public class ArtistController {
 	}
 	
 	@GetMapping(value = "/artists")	
-	public List<ArtistData> getAlbums(){
+	public List<ArtistData> getArtists(){
 		return artistService.getAllArtists();
 	}
 	
@@ -34,7 +34,7 @@ public class ArtistController {
 	}
 
 	@PutMapping(value = "/artists/{artistId}")	
-	public Artist updateAlbums(@PathVariable("artistId") Long id, @RequestBody ArtistData artistData) throws Exception{
+	public Artist updateArtist(@PathVariable("artistId") Long id, @RequestBody ArtistData artistData) throws Exception{
 		return artistService.saveArtist(id, artistData);
 	}
 }
