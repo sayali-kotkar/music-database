@@ -19,7 +19,7 @@ public class Artist {
 
 	@Id
 	@Column(name = "artist_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long artistId;
 
 	@Column(name = "Name")
