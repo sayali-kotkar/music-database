@@ -25,7 +25,7 @@ public class ArtistServiceImpl implements ArtistService{
 	@Override
 	public List<ArtistData> getAllArtists() {
 		
-		List<Artist> artists=  artistRepository.findAll();
+		List<Artist> artists=  artistRepository.findAllByOrderByNameAsc();
 		List<ArtistData> artistsData = artists.stream().map(a -> new ArtistData(a)).collect(Collectors.toList());
 		return artistsData;
 	}

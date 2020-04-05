@@ -23,7 +23,7 @@ public class ArtistRepositoryTest {
 		artist.setName("Paulo");
 
 		repository.save(artist);
-        List<Artist> artists =repository.findAll();
+        List<Artist> artists =repository.findAllByOrderByNameAsc();
         assertThat(artists.size(), is(1));
 		assertThat(artists.get(0).getArtistId(), is(1L));
 	}
