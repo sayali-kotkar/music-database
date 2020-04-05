@@ -2,7 +2,6 @@ package com.lexisnexis.music.service;
 
 import java.util.List;
 
-import com.lexisnexis.music.model.Album;
 import com.lexisnexis.music.model.AlbumData;
 
 

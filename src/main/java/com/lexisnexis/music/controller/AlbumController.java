@@ -26,15 +26,6 @@ public class AlbumController {
 		this.albumService = albumService;
 	}
 	
-	@GetMapping(value = "/dummy")	
-	public List<AlbumData> dummy(@PathVariable("artistId") Long artistId){
-		AlbumData albumData = new AlbumData();
-		albumData.setTitle("album1");
-		List<AlbumData> artist = new ArrayList();
-		artist.add(albumData);
-		return artist;
-	}
-	
 	@GetMapping(value = "/albums")	
 	public List<AlbumData> getAlbums(@PathVariable( "artistId" ) Long artistId){
 		
