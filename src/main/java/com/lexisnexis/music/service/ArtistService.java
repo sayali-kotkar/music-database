@@ -11,8 +11,8 @@ public interface ArtistService {
 
 	public List<ArtistData> getAllArtists();
 	
-	public Artist saveArtist(ArtistData artist);
+	public ArtistData saveArtist(ArtistData artist);
 
-	public Artist saveArtist(Long id, ArtistData artistData) throws Exception;
+	public ArtistData saveArtist(Long id, ArtistData artistData) throws Exception;
 }
 		

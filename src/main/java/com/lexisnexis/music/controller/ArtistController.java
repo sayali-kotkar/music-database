@@ -1,5 +1,6 @@
 package com.lexisnexis.music.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,19 +23,29 @@ public class ArtistController {
 		this.artistService = artistService;
 	}
 	
+	@GetMapping(value = "/dummy")	
+	public List<ArtistData> getArtists1(){
+		ArtistData data = new ArtistData("artist1");
+		ArtistData data1 = new ArtistData("artist2");
+		
+		List<ArtistData> artist = new ArrayList();
+		artist.add(data1);
+		artist.add(data);
+		return artist;
+	}	
+	
 	@GetMapping(value = "/artists")	
 	public List<ArtistData> getArtists(){
 		return artistService.getAllArtists();
-	}
-	
+	}	
 	
 	@PostMapping(value = "/artists")	
-	public Artist createArtists(@RequestBody ArtistData artistData){
+	public ArtistData createArtists(@RequestBody ArtistData artistData){
 		return artistService.saveArtist(artistData);
 	}
 
 	@PutMapping(value = "/artists/{artistId}")	
-	public Artist updateArtist(@PathVariable("artistId") Long id, @RequestBody ArtistData artistData) throws Exception{
+	public ArtistData updateArtist(@PathVariable("artistId") Long id, @RequestBody ArtistData artistData) throws Exception{
 		return artistService.saveArtist(id, artistData);
 	}
 }

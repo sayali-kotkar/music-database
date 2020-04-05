@@ -1,20 +1,21 @@
 package com.lexisnexis.music.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.lexisnexis.music.model.AlbumData;
 import com.lexisnexis.music.service.AlbumService;
 
-@Controller
+@RestController
 @RequestMapping(value = "/artists/{artistId}")
 public class AlbumController {
 
@@ -25,21 +26,30 @@ public class AlbumController {
 		this.albumService = albumService;
 	}
 	
+	@GetMapping(value = "/dummy")	
+	public List<AlbumData> dummy(@PathVariable("artistId") Long artistId){
+		AlbumData albumData = new AlbumData();
+		albumData.setTitle("album1");
+		List<AlbumData> artist = new ArrayList();
+		artist.add(albumData);
+		return artist;
+	}
+	
 	@GetMapping(value = "/albums")	
-	public List<AlbumData> getAlbums(){
-		return albumService.getAlbums();
+	public List<AlbumData> getAlbums(@PathVariable( "artistId" ) Long artistId){
+		
+		return albumService.getAlbums(artistId);
 	}
 	
 	
 	@PostMapping(value = "/albums")	
-	public void createAlbums(@RequestBody AlbumData albumData){
-		 albumService.saveAlbum(albumData);
+	public AlbumData createAlbums(@PathVariable( "artistId" ) Long id, @RequestBody AlbumData albumData) throws Exception{
+		 return albumService.saveAlbum(id, albumData);
 	}
 
-	
 	@PutMapping(value = "albums/{albumId}")	
-	public void updateAlbums(@PathVariable( "albumId" ) Long id, @RequestBody AlbumData albumData){
-		 albumService.saveAlbum(albumData);
+	public AlbumData updateAlbums(@PathVariable( "artistId" ) Long artistId, @PathVariable( "albumId" ) Long albumId, @RequestBody AlbumData albumData) throws Exception{
+		 return albumService.saveAlbum(artistId, albumId, albumData);
 	}
 
 }

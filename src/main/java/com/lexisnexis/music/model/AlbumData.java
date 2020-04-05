@@ -15,13 +15,12 @@ public class AlbumData {
 
 	}
 
-
 	private Long id;
 	private String title;
 	private String yearOfRelease;
 	private String genres;
 
-	public Album getAlbum() {
+	public Album convertObjectAlbum() {
 		Album album = new Album();
 
 		album.setTitle(this.title);
@@ -35,6 +34,10 @@ public class AlbumData {
 		this.title = title;
 		this.yearOfRelease = yearOfRelease;
 		this.genres = genres;
+	}
+
+	public AlbumData() {
+		// TODO Auto-generated constructor stub
 	}
 
 }

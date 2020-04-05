@@ -31,16 +31,17 @@ public class ArtistServiceImpl implements ArtistService{
 	}
 
 	@Override
-	public Artist saveArtist(ArtistData artist) {
-		return artistRepository.save(artist.getArtist());
+	public ArtistData saveArtist(ArtistData artist) {
+		Artist artist_saved =  artistRepository.save(artist.convertToArtist());
+		return new ArtistData(artist_saved);
 		
 	}
 
 	@Override
-	public Artist saveArtist(Long id, ArtistData artistData) throws Exception {
+	public ArtistData saveArtist(Long id, ArtistData artistData) throws Exception {
 		Artist artist = artistRepository.findById(id).orElseThrow(() -> new Exception("Artist not found with id"+ id));
 		artist.setName(artistData.getName());
-		return artistRepository.save(artist);
+		return new ArtistData(artistRepository.save(artist));
 	}
 
 }
