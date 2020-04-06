@@ -22,18 +22,21 @@ public class ArtistController {
 		this.artistService = artistService;
 	}
 
-	@GetMapping(value = "/artists")	
-	public List<ArtistData> getArtists(@RequestParam(required = false) String searchTerm){
-		return artistService.getAllArtists(searchTerm);
-	}	
-	
-	@PostMapping(value = "/artists")	
-	public ArtistData createArtists(@RequestBody ArtistData artistData){
+	@GetMapping(value = "/artists")
+	public List<ArtistData> getArtists(@RequestParam(required = false) String searchTerm,
+			@RequestParam(required = false, defaultValue = "0") int page,
+			@RequestParam(required = false, defaultValue = "10") int limit) {
+		return artistService.getAllArtists(searchTerm, page, limit);
+	}
+
+	@PostMapping(value = "/artists")
+	public ArtistData createArtists(@RequestBody ArtistData artistData) {
 		return artistService.saveArtist(artistData);
 	}
 
-	@PutMapping(value = "/artists/{artistId}")	
-	public ArtistData updateArtist(@PathVariable("artistId") Long id, @RequestBody ArtistData artistData) throws Exception{
+	@PutMapping(value = "/artists/{artistId}")
+	public ArtistData updateArtist(@PathVariable("artistId") Long id, @RequestBody ArtistData artistData)
+			throws Exception {
 		return artistService.saveArtist(id, artistData);
 	}
 }

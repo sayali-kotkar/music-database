@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -24,16 +27,19 @@ public class ArtistServiceImpl implements ArtistService {
 	}
 
 	@Override
-	public List<ArtistData> getAllArtists(String searchTerm) {
-		List<Artist> artists;
-
+	public List<ArtistData> getAllArtists(String searchTerm, int page, int limit) {
+		
+		Page<Artist> artists;
+		 
+		Pageable pageable = PageRequest.of(page, limit, Sort.by("name").ascending());
+		
 		if (searchTerm != null) {
-			artists = artistRepository.findAll(ArtistSpecification.nameIsLike(searchTerm), Sort.by("name"));
+			artists = artistRepository.findAll(ArtistSpecification.nameIsLike(searchTerm), pageable);
 		} else {
 
-		artists = artistRepository.findAll(Sort.by("name"));
-		
+		  artists = artistRepository.findAll(pageable);		
 		}
+		
 		List<ArtistData> artistsData = artists.stream().map(a -> new ArtistData(a)).collect(Collectors.toList());
 		return artistsData;
 	}

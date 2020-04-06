@@ -7,7 +7,7 @@ import com.lexisnexis.music.model.ArtistData;
 
 public interface ArtistService {
 
-	public List<ArtistData> getAllArtists(String searchTerm);
+	public List<ArtistData> getAllArtists(String searchTerm, int page, int limit);
 	
 	public ArtistData saveArtist(ArtistData artist);
 
