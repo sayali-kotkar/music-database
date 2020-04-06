@@ -4,9 +4,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.List;
 
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -14,11 +16,14 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lexisnexis.music.model.Artist;
 import com.lexisnexis.music.model.ArtistData;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@Transactional
+//@DataJpaTest
 public class ArtistControllerTest {
 
 	@LocalServerPort
@@ -33,8 +38,8 @@ public class ArtistControllerTest {
 		ArtistData artistDataReq = new ArtistData("ARRehman");
 		String base_url = "http://localhost:" + port + "/artists";
 
-		ResponseEntity<Artist> album = this.restTemplate.postForEntity(base_url, artistDataReq, Artist.class);
-		assertThat(album.getBody().getArtistId(), Matchers.isA(Long.class));
+		ResponseEntity<ArtistData> album = this.restTemplate.postForEntity(base_url, artistDataReq, ArtistData.class);
+		assertThat(album.getBody().getId(), Matchers.isA(Long.class));
 		assertThat(album.getBody().getName(), Matchers.is("ARRehman"));
 	}
 
@@ -44,14 +49,14 @@ public class ArtistControllerTest {
 		ArtistData artistDataReq = new ArtistData("ARRehman");
 		String base_url = "http://localhost:" + port + "/artists";
 
-		ResponseEntity<Artist> album = this.restTemplate.postForEntity(base_url, artistDataReq, Artist.class);
-		assertThat(album.getBody().getArtistId(), Matchers.isA(Long.class));
+		ResponseEntity<ArtistData> album = this.restTemplate.postForEntity(base_url, artistDataReq, ArtistData.class);
+		assertThat(album.getBody().getId(), Matchers.isA(Long.class));
 
 		ArtistData artistDataReqAgain = new ArtistData("Stephanie");
-	    this.restTemplate.put(base_url + "/" +  album.getBody().getArtistId(), artistDataReqAgain);
+	    this.restTemplate.put(base_url + "/" +  album.getBody().getId(), artistDataReqAgain);
 		
 	    List<ArtistData> albumList = restTemplate.exchange(
-				base_url, 
+				base_url + "?searchTerm=Stephanie", 
 				HttpMethod.GET,
 				null,
 				new ParameterizedTypeReference<List<ArtistData>>() {}).getBody();
